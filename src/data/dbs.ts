@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export default function db(){
-    mongoose.connect("mongodb://0.0.0.0:27017",{
+    mongoose.connect(process.env.MONGO_URI!,{
         dbName:"demobase"
     }).then(()=>{
         console.log("data base is connected...")
