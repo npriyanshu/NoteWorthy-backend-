@@ -1,5 +1,7 @@
 import { NextFunction,Request,Response } from "express";
 import User, { IUser } from "../models/userModel.js";
+import { validationResult } from "express-validator";
+import { filterErrors } from "../utility/filterErrors.js";
 
 export const getUsers =  async(req:Request, res:Response,next:NextFunction)=>{
 
@@ -18,15 +20,28 @@ export const getUsers =  async(req:Request, res:Response,next:NextFunction)=>{
 }
 
 
-export const createUser = async(req:Request, res:Response,next:NextFunction)=>{
+export const createUser = async(req:Request, res:Response)=>{
 
-    // const {name,email} = req.body;
-    const { name,email } = req.body
+    // validating email
+    const result = validationResult(req);
 
-    await User.create({
-        name,
-        email
+    
+    if (!result.isEmpty()) {
+    //   console.log('Failed validation result :',result.array());
+    const errors = filterErrors(result.array());
+    res.json({
+        errors
     });
+
+    return;
+
+    }
+    const {name,email} = req.body;
+
+    // await User.create({
+    //     name,
+    //     email
+    // });
 
      res.json({
         success:true,
