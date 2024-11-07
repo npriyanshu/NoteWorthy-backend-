@@ -5,7 +5,6 @@ import { isAuthenticated } from "../middlewares/auth.js";
 
 const router:Router = express.Router();
 
-
 // crud for user
 router.route('/:id')
 .put(isAuthenticated,updateUser)

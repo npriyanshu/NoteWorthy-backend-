@@ -1,6 +1,7 @@
 import express from "express"
 import db from "./data/dbs.js";
 import userRoute from "./routers/user.js"
+import notesRoute from "./routers/note.js"
 import { config } from "dotenv";
 import {dirname} from "path";
 import { fileURLToPath } from 'url';
@@ -35,6 +36,7 @@ db();
 
 //  user routes
 app.use("/user",userRoute);
+app.use("/notes",notesRoute)
 
 
 app.get("/",(req,res)=>{
